@@ -1,0 +1,44 @@
+Algorithm for PASS – I
+1. Set MDTC(macro definition table counter) to 1
+2. Set MNTC(macro name table counter) to 1
+3. Read next statement from source program
+4. If this source statement is pseudo-opcode MACRO (start of macro definition) then goto step 5 else
+goto step 16
+5. Read next statement from source program(macro name line)
+6. Enter macro name found in step 5 in name field of MNT(macro name table) and Also enter current
+value of MDTC in MDT index field of MNT
+7. Increment MNTC by 1
+8. Prepare argument list array
+9. Enter macro name into MDT at index MDTC
+10. Increment MDTC by one
+11. Read next statement from source program.
+12. Create and substitute index notation for arguments in the source statement if any
+13. Enter this line into the MDT
+14. Increment MDTC by one
+15. Check if currently red source statement is pseudo-opcode MEND. If yes then goto step 3 else goto
+step 11
+16. Write source program statement as it is in file(output of pass 1 s.p.)
+17. Check if pseudo opcoce END(end of source program) is encountered . If yes goto step 18 else goto
+step 19
+18. goto PASS – II
+19. Go to step 3
+20. end of PASS –I
+Algorithm for PASS – II
+1. Read next statement from source program(from output s.p. file of pass I)
+2. Search in MNT for match with operation code(mnemonic)
+3. If macro name found the goto step 4 else goto step 11
+4. Retrieve MDT index from MNT and store it in MDTP(macro definition table pointer).
+
+Rizvi College of Engineering CSL601 (SPCC)
+
+Page | 22
+5. Set up argument list array (store actual parameter in ala)
+6. Increment MDTP by 1
+7. Retrieve line pointer by MDTP from MDT
+8. Substitute index notation by actual parameter from argument list array if any
+9. Check if currently retrieved line is pseudo opcode MEND, if yes go to step 1 else goto step 10
+10. Write the statement formed in step 8 to expanded source file and go to step 6
+11. Write source statement directly into expanded source file
+12. Check if pseudo opcode END(end of s.p. output of pass I) encountered, if yes goto step 13 else goto
+step 1
+13. End of PASS-II
